@@ -13,6 +13,14 @@ app.use(
     })
 )
 
+//use cors to communicate between front-end and back-end
+const cors = require('cors');
+app.use(cors());
+
+//set EJS as templating engine
+app.set('view engine', 'ejs');
+
+
 const countryRouter = require('./routes/countryRouter');
 app.use('/api/countries', countryRouter);
 

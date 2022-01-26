@@ -1,6 +1,5 @@
 //create express router
 const countryRouter = require('express').Router();
-const { request, response } = require('express');
 const querystring = require('querystring');
 const { body, validationResult, check } = require('express-validator')
 
@@ -90,7 +89,12 @@ countryRouter.get('/', (request, response) => {
         }
     }
     else {
-        response.send(countriesData);
+
+        //added EJS
+        response.render('home', { countriesData: countriesData });
+
+        //commented in order to use EJS
+        //response.send(countriesData);
     }
 })
 
@@ -137,8 +141,13 @@ countryRouter.post('/',
         //so perform post operation
         if (index < 0) {
             countriesData.push(newCountry);
-            response.status(200);
-            response.send(countriesData);
+            //response.status(200);
+
+            //commented to use EJS
+            // response.send(countriesData);
+
+            //addded to use EJS
+            response.redirect('/api/countries');
 
         } else {
             response.send('country already exist')
@@ -161,9 +170,6 @@ countryRouter.get('/:code', (request, response) => {
 countryRouter.put('/:code',
     //validate data
     createValidationchain,
-    // body('name').isString(),
-    // createValidationchain(),
-    // body('alpha3Code').isAlpha(),
     (request, response) => {
         //if not valid data, send response
         const errors = validationResult(request);
